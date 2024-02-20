@@ -49,10 +49,8 @@ public class AdventurerExplore : AdventurerState {
 
     private void NewDestination() {
         Vector3 roomPos = currentRoom.GetRoomPosition();
-        Debug.Log(roomPos);
         float randX = Random.Range(roomPos.x - 5.0f, roomPos.x + 5.0f);
         float randZ = Random.Range(roomPos.z - 5.0f, roomPos.z + 5.0f);
         destination = new Vector3(randX, adventurer.transform.position.y, randZ);
-        Debug.Log(destination);
     }
 }

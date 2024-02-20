@@ -22,6 +22,7 @@ public class MotionTracker : MonoBehaviour {
 
     [SerializeField]
     private WandManager wand;
+    private AudioSource audio;
 
     void Start() {
         Debug.Log(Resources.Load<TextAsset>("Circle"));
@@ -33,7 +34,7 @@ public class MotionTracker : MonoBehaviour {
         // }
         trainingSet.Add(GestureIO.ReadGestureFromXML(textFile));
 
-        // Debug.Log(gestureFiles[0]);
+        audio = GetComponent<AudioSource>();
     }
 
     void Update() {
@@ -49,6 +50,7 @@ public class MotionTracker : MonoBehaviour {
     }
 
     void StartMovement() {
+        audio.Play();
         // Debug.Log("Start movement");
         isMoving = true;
         positionsList.Clear();
@@ -59,7 +61,7 @@ public class MotionTracker : MonoBehaviour {
     }
 
     void EndMovement() {
-        // Debug.Log("End movement");
+        audio.Stop();
         isMoving = false;
 
         // Create gesture from position list

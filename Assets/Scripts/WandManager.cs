@@ -6,6 +6,11 @@ public class WandManager : MonoBehaviour {
     [SerializeField]
     private ParticleSystem ps;
 
+    [SerializeField]
+    private AudioSource tapAudio;
+    [SerializeField]
+    private AudioSource spellAudio;
+
     private bool isHeld;
     private bool isActivated;
 
@@ -14,16 +19,22 @@ public class WandManager : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision col) {
-        if(isActivated && col.gameObject.tag == "Crystal Ball") {
-            col.gameObject.GetComponent<CrystalBallManager>().SpawnGoblin();
-            ps.Stop();
-            isActivated = false;
+        if(col.gameObject.tag == "Crystal Ball") {
+
+            tapAudio.Play();
+            if(isActivated) {
+                col.gameObject.GetComponent<CrystalBallManager>().SpawnGoblin();
+                spellAudio.Stop();
+                ps.Stop();
+                isActivated = false;
+            }
         }
     }
 
     public void ActivateWand() {
         if(isHeld) {
             isActivated = true;
+            spellAudio.Play();
             ps.Play();
         }
     }
