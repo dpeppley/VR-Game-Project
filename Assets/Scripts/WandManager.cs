@@ -9,6 +9,8 @@ public class WandManager : MonoBehaviour {
     [SerializeField]
     private AudioSource tapAudio;
     [SerializeField]
+    private AudioSource drawAudio;
+    [SerializeField]
     private AudioSource spellAudio;
 
     private bool isHeld;
@@ -41,5 +43,9 @@ public class WandManager : MonoBehaviour {
 
     public void IsHeld() {
         isHeld = !isHeld;
+    }
+
+    public AudioSource GetDrawAudio() {
+        return drawAudio;
     }
 }

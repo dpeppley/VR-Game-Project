@@ -34,7 +34,7 @@ public class MotionTracker : MonoBehaviour {
         // }
         trainingSet.Add(GestureIO.ReadGestureFromXML(textFile));
 
-        audio = GetComponent<AudioSource>();
+        audio = wand.GetDrawAudio();
     }
 
     void Update() {

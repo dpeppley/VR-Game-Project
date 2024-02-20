@@ -13,9 +13,12 @@ public class CrystalBallManager : MonoBehaviour
 
     private bool cameraInDungeon;
 
+    private AudioSource teleportAudio;
+
     void Start() {
         cameraInDungeon = false;
         startPos = xrOrigin.transform.position;
+        teleportAudio = GetComponent<AudioSource>();
     }
 
     public void SpawnGoblin() {
@@ -23,11 +26,13 @@ public class CrystalBallManager : MonoBehaviour
     }
 
     public void MoveToCamera() {
+        teleportAudio.Play();
         xrOrigin.transform.position = spawnPoint.transform.position;
         cameraInDungeon = true;
     }
 
     public void MoveToOffice() {
+        teleportAudio.Play();
         xrOrigin.transform.position = startPos;
         cameraInDungeon = false;
     }
