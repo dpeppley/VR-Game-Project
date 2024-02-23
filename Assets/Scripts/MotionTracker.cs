@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 using PDollarGestureRecognizer;
+using UnityEngine.VFX;
 using System.IO;
 
 public class MotionTracker : MonoBehaviour {
@@ -22,9 +23,13 @@ public class MotionTracker : MonoBehaviour {
 
     [SerializeField]
     private WandManager wand;
+    [SerializeField]
+    private GameObject vfx;
+
     private AudioSource audio;
 
     void Start() {
+        vfx.SetActive(false);
         Debug.Log(Resources.Load<TextAsset>("Circle"));
         string textFile = Resources.Load<TextAsset>("Circle").ToString();
         // string[] gestureFiles = Directory.GetFiles(Application.persistentDataPath, "*.xml");
@@ -51,6 +56,7 @@ public class MotionTracker : MonoBehaviour {
 
     void StartMovement() {
         audio.Play();
+        vfx.SetActive(true);
         // Debug.Log("Start movement");
         isMoving = true;
         positionsList.Clear();
@@ -62,6 +68,8 @@ public class MotionTracker : MonoBehaviour {
 
     void EndMovement() {
         audio.Stop();
+        vfx.GetComponent<TrailRenderer>().Clear();
+        vfx.SetActive(false);
         isMoving = false;
 
         // Create gesture from position list
