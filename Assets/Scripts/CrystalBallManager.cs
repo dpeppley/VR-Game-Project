@@ -42,6 +42,7 @@ public class CrystalBallManager : MonoBehaviour
     }
 
     public void AlertFlash() {
+        Debug.Log(spawnPoint);
         spawnPoint.GetComponent<SpawnManager>().StartCoroutine("AlertFlash");
     }
 }
