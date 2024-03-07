@@ -14,7 +14,7 @@ public class DungeonRoom : MonoBehaviour {
 
     private List<GameObject> goblins;
 
-    void Start() {
+    void Awake() {
         goblins = new List<GameObject>();
     }
 
@@ -32,7 +32,6 @@ public class DungeonRoom : MonoBehaviour {
 
     public void AddGoblin(GameObject goblin) {
         goblins.Add(goblin);
-        Debug.Log("Goblin spawned");
     }
 
     public void RemoveGoblin() {

@@ -22,6 +22,7 @@ public class AdventurerMove : AdventurerState {
     public override void CheckTransitions() {}
 
     public override void OnStateEnter() {
+        asc.GetAnimator().SetBool("isWalking", true);
         currentLocation = asc.GetCurrentRoom();
         adventurer = asc.gameObject;
         if(selectedPath != null) {
@@ -37,6 +38,7 @@ public class AdventurerMove : AdventurerState {
     }
 
     public override void OnStateExit() {
+        asc.GetAnimator().SetBool("isWalking", false);
         asc.SetCurrentRoom(selectedPath.gameObject);
     }
 }

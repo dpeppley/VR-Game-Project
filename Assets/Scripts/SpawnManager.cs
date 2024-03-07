@@ -22,6 +22,10 @@ public class SpawnManager : MonoBehaviour
 	private bool cooldown = false;
 	private bool isActive;
 
+	private void Start() {
+		ActivateCamera();
+	}
+
 	private void Update()
     {
 		// Debug.Log(Time.time +", " + nextSpawnTime);

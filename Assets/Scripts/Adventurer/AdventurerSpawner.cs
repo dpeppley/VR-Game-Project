@@ -15,6 +15,6 @@ public class AdventurerSpawner : MonoBehaviour {
     private IEnumerator SpawnAdventurer() {
         Instantiate(adventurerPrefab, spawnPoint.position, Quaternion.identity);
         yield return new WaitForSeconds(5.0f);
-        StartCoroutine("SpawnAdventurer");
+        //StartCoroutine("SpawnAdventurer");
     }
 }

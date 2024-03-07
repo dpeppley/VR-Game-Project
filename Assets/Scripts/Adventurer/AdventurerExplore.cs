@@ -13,15 +13,15 @@ public class AdventurerExplore : AdventurerState {
     public AdventurerExplore(AdventurerStateController asc) : base(asc) {}
 
     public override void Act() {
-        // if(asc.exploring) {
-        //     if(!asc.IsWaiting()) {
-        //         if(currentRoom.HasGoblins()) {
-        //             asc.FightGoblin();
-        //         }
-        //     }
-        // } else {
-        //     asc.SetState(new AdventurerMove());
-        // }
+        if(asc.IsExploring()) {
+            if(!asc.IsWaiting()) {
+                if(currentRoom.HasGoblins()) {
+                    asc.FightGoblin();
+                }
+            }
+        } else {
+            asc.SetState(new AdventurerMove(asc));
+        }
         if(!asc.IsWaiting()){
             if(Vector3.Distance(adventurer.transform.position, destination) > 0.5f) {
                 adventurer.transform.position = Vector3.MoveTowards(adventurer.transform.position, destination, 0.05f);
