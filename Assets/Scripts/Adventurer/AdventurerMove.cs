@@ -23,6 +23,7 @@ public class AdventurerMove : AdventurerState {
 
     public override void OnStateEnter() {
         asc.GetAnimator().SetBool("isWalking", true);
+        // asc.SetWalkAvatar();
         currentLocation = asc.GetCurrentRoom();
         adventurer = asc.gameObject;
         if(selectedPath != null) {

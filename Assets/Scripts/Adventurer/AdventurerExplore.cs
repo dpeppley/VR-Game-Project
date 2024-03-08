@@ -24,8 +24,11 @@ public class AdventurerExplore : AdventurerState {
         }
         if(!asc.IsWaiting()){
             if(Vector3.Distance(adventurer.transform.position, destination) > 0.5f) {
-                adventurer.transform.position = Vector3.MoveTowards(adventurer.transform.position, destination, 0.05f);
+                asc.SetWalkAvatar();
+                asc.GetAnimator().SetBool("isWalking", true);
+                adventurer.transform.position = Vector3.MoveTowards(adventurer.transform.position, destination, 0.02f);
             } else {
+                asc.GetAnimator().SetBool("isWalking", false);
                 NewDestination();
             }
         }
@@ -48,6 +51,7 @@ public class AdventurerExplore : AdventurerState {
     public override void OnStateExit() {}
 
     private void NewDestination() {
+        asc.StartIdling();
         Vector3 roomPos = currentRoom.GetRoomPosition();
         float randX = Random.Range(roomPos.x - 5.0f, roomPos.x + 5.0f);
         float randZ = Random.Range(roomPos.z - 5.0f, roomPos.z + 5.0f);

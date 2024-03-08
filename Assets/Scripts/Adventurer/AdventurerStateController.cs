@@ -8,6 +8,13 @@ public class AdventurerStateController : MonoBehaviour {
     [SerializeField]
     private GameObject currentRoom;
 
+    [SerializeField]
+    private Avatar idleAvatar;
+    [SerializeField]
+    private Avatar walkingAvatar;
+    [SerializeField]
+    private Avatar attackAvatar;
+
     private Animator anim;
 
     private bool waiting = false;
@@ -21,9 +28,14 @@ public class AdventurerStateController : MonoBehaviour {
 
     void Update() {
         // Debug.Log("Walking: " + anim.GetBool("isWalking") + ", fighting: " + anim.GetBool("isFighting"));
-        Debug.Log(anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+        // Debug.Log(anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         currentState.CheckTransitions();
         currentState.Act();
+        // if(!anim.GetBool("isAttacking")) {
+        //     anim.avatar = anim.GetBool("isWalking") ? walkingAvatar : idleAvatar;
+        // }
+
+        Debug.Log("Avatar: " + anim.avatar.name + ", anim clip: " + anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
     }
 
     public void SetState(AdventurerState state) {
@@ -67,6 +79,14 @@ public class AdventurerStateController : MonoBehaviour {
         return anim;
     }
 
+    public void SetWalkAvatar() {
+        anim.avatar = walkingAvatar;
+    }
+
+    public void setIdleAvatar() {
+        anim.avatar = idleAvatar;
+    }
+
     private IEnumerator ExploreRoom() {
         for(int i = 0; i < 10; i++) {
             yield return new WaitForSeconds(1.0f);
@@ -81,14 +101,32 @@ public class AdventurerStateController : MonoBehaviour {
     }
 
     private IEnumerator FightingGoblin() {
-        anim.SetBool("isFighting", true);
+        anim.avatar = attackAvatar;
+        anim.SetBool("isAttacking", true);
+        Debug.Log("Is fighting: " + anim.GetBool("isAttacking"));
+        
+        
         waiting = true;
 
         yield return new WaitForSeconds(2.0f);
 
         currentRoom.GetComponent<DungeonRoom>().RemoveGoblin();
 
-        anim.SetBool("isFighting", false);
+        anim.SetBool("isAttacking", false);
+        anim.avatar = idleAvatar;
+        waiting = false;
+    }
+
+    public void StartIdling() {
+        StartCoroutine("Idling");
+    }
+
+    private IEnumerator Idling() {
+        anim.avatar = idleAvatar;
+        waiting = true;
+
+        yield return new WaitForSeconds(3.0f);
+
         waiting = false;
     }
 }

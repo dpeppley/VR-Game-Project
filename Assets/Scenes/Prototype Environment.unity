@@ -43380,6 +43380,14 @@ PrefabInstance:
       propertyPath: crystalBall
       value: 
       objectReference: {fileID: 266167554}
+    - target: {fileID: 4295107387594714437, guid: 3a146b8aa876e084fa979cf5d7af6d6b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295107387594714437, guid: 3a146b8aa876e084fa979cf5d7af6d6b, type: 3}
+      propertyPath: adventurerPrefab
+      value: 
+      objectReference: {fileID: 4480975007632561325, guid: 202d983273ec33c4a8c46b9acc1679aa, type: 3}
     - target: {fileID: 4352359095702277386, guid: 3a146b8aa876e084fa979cf5d7af6d6b, type: 3}
       propertyPath: m_Mesh
       value: 
