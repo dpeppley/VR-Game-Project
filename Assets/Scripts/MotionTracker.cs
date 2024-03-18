@@ -13,7 +13,7 @@ public class MotionTracker : MonoBehaviour {
     public Transform movementSource;
 
     public float newPositionThresholdDistance = 0.05f;
-    public GameObject debugCubePrefab;
+    //public GameObject debugCubePrefab;
     public bool creationMode = true;
     public string newGestureName;
 
@@ -61,9 +61,9 @@ public class MotionTracker : MonoBehaviour {
         isMoving = true;
         positionsList.Clear();
         positionsList.Add(movementSource.position);
-        if(debugCubePrefab) {
+        /*if(debugCubePrefab) {
             Destroy(Instantiate(debugCubePrefab, movementSource.position, Quaternion.identity), 3);
-        }
+        }*/
     }
 
     void EndMovement() {
@@ -103,9 +103,9 @@ public class MotionTracker : MonoBehaviour {
         Vector3 lastPosition = positionsList[positionsList.Count - 1];
         if(Vector3.Distance(movementSource.position, lastPosition) > newPositionThresholdDistance) {
             positionsList.Add(movementSource.position);
-            if(debugCubePrefab) {
+            /*if(debugCubePrefab) {
                 Destroy(Instantiate(debugCubePrefab, movementSource.position, Quaternion.identity), 3);
-            }
+            }*/
         }
     }
 }
