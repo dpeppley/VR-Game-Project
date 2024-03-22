@@ -27,7 +27,8 @@ public class CrystalBallManager : MonoBehaviour
 
     public void MoveToCamera() {
         teleportAudio.Play();
-        xrOrigin.transform.position = spawnPoint.transform.position;
+        Vector3 cameraTransform = spawnPoint.transform.position;
+        xrOrigin.transform.position = new Vector3(cameraTransform.x, cameraTransform.y - 8.0f, cameraTransform.z);
         cameraInDungeon = true;
     }
 
@@ -42,7 +43,7 @@ public class CrystalBallManager : MonoBehaviour
     }
 
     public void AlertFlash() {
-        Debug.Log(spawnPoint);
+        // Debug.Log(spawnPoint);
         spawnPoint.GetComponent<SpawnManager>().StartCoroutine("AlertFlash");
     }
 }

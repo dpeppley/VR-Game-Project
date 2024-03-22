@@ -5,12 +5,14 @@ using UnityEngine;
 public class AdventurerExplore : AdventurerState {
     private bool exploringDone = false;
     private DungeonRoom currentRoom;
-
     private GameObject adventurer;
-
     private Vector3 destination;
 
-    public AdventurerExplore(AdventurerStateController asc) : base(asc) {}
+    private MonoBehaviour mono;
+
+    public AdventurerExplore(AdventurerStateController asc) : base(asc) {
+        mono = asc;
+    }
 
     public override void Act() {
         if(asc.IsExploring()) {
@@ -46,6 +48,7 @@ public class AdventurerExplore : AdventurerState {
         currentRoom.AlertCamera();
         NewDestination();
         asc.StartExploring();
+        // asc.StartCoroutine("ExploreRoom");
     }
 
     public override void OnStateExit() {}

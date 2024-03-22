@@ -93,6 +93,7 @@ public class MotionTracker : MonoBehaviour {
             Result result = PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
             Debug.Log(result.GestureClass + result.Score);
             if (result.Score > 0.9f) {
+                Debug.Log("Wand activated");
                 wand.ActivateWand();
             }
         }

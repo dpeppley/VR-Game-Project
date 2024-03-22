@@ -45,19 +45,22 @@ public class SpawnManager : MonoBehaviour
 
 
 	public void ActivateCamera() {
+		Debug.Log("Camera activated");
 		if(!cooldown) {
-			Vector3 fwd = transform.TransformDirection(Vector3.forward);
-			RaycastHit hit;
-			if (Physics.Raycast(transform.position, fwd, out hit, Mathf.Infinity)) {
-				cooldown = true;
+			Debug.Log("Off cooldown");
+			// Vector3 fwd = transform.TransformDirection(Vector3.forward);
+			// RaycastHit hit;
+			// if (Physics.Raycast(transform.position, fwd, out hit, Mathf.Infinity)) {
+			Debug.Log("Spawned!");
+			cooldown = true;
 
-				// Raycast from camera to plane
-				GameObject goblin = Instantiate(prefabToSpawn, Vector3.Lerp(hit.point, VariedPosition(transform.position), 0.1f), transform.rotation);
-				room.AddGoblin(goblin);
+			// Raycast from camera to plane
+			GameObject goblin = Instantiate(prefabToSpawn, VariedPosition(room.GetRoomPosition()) , transform.rotation);
+			room.AddGoblin(goblin);
 
-				crystalBall.GetComponent<Renderer>().material = cooldownMat;
-				nextSpawnTime = Time.time + cooldownTime;
-			}
+			crystalBall.GetComponent<Renderer>().material = cooldownMat;
+			nextSpawnTime = Time.time + cooldownTime;
+			// }
 		}
 	}
 
@@ -66,9 +69,9 @@ public class SpawnManager : MonoBehaviour
 	}
 
 	private Vector3 VariedPosition(Vector3 pos) {
-		float newX = pos.x + Random.Range(-10f, 10f);
-		float newY = pos.y + Random.Range(-10f, 10f);
-		float newZ = pos.z + Random.Range(-10f, 10f);
+		float newX = pos.x + Random.Range(-5f, 5f);
+		float newY = pos.y + 5f;
+		float newZ = pos.z + Random.Range(-5f, 5f);
 		Vector3 newPos = new Vector3(newX, newY, newZ);
 		return newPos;
 	}

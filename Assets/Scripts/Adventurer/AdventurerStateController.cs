@@ -6,7 +6,7 @@ public class AdventurerStateController : MonoBehaviour {
     [SerializeField]
     private AdventurerState currentState;
     [SerializeField]
-    private GameObject currentRoom;
+    private DungeonRoom currentRoom;
 
     [SerializeField]
     private Avatar idleAvatar;
@@ -22,7 +22,7 @@ public class AdventurerStateController : MonoBehaviour {
 
     void Start() {
         anim = GetComponent<Animator>();
-        currentRoom = GameObject.Find("Room 1");
+        currentRoom = GameObject.Find("Adventurer Spawner").GetComponent<DungeonRoom>();
         SetState(new AdventurerMove(this));
     }
 
@@ -35,7 +35,7 @@ public class AdventurerStateController : MonoBehaviour {
         //     anim.avatar = anim.GetBool("isWalking") ? walkingAvatar : idleAvatar;
         // }
 
-        Debug.Log("Avatar: " + anim.avatar.name + ", anim clip: " + anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+        // Debug.Log("Avatar: " + anim.avatar.name + ", anim clip: " + anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
     }
 
     public void SetState(AdventurerState state) {
@@ -50,11 +50,11 @@ public class AdventurerStateController : MonoBehaviour {
         }
     }
 
-    public GameObject GetCurrentRoom() {
+    public DungeonRoom GetCurrentRoom() {
         return currentRoom;
     }
 
-    public void SetCurrentRoom(GameObject room) {
+    public void SetCurrentRoom(DungeonRoom room) {
         currentRoom = room;
     }
 

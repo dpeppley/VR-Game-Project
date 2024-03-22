@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class DungeonRoom : MonoBehaviour {
     [SerializeField]
-    public GameObject[] nextRooms;
+    public DungeonPath[] nextRooms;
     [SerializeField]
     private Transform roomPos;
 
@@ -22,7 +22,7 @@ public class DungeonRoom : MonoBehaviour {
         return nextRooms.Length != 0;
     }
 
-    public GameObject[] GetPathOptions() {
+    public DungeonPath[] GetPathOptions() {
         return nextRooms;
     }
 
