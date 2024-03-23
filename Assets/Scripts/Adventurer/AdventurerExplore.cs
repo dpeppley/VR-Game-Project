@@ -18,6 +18,7 @@ public class AdventurerExplore : AdventurerState {
         if(asc.IsExploring()) {
             if(!asc.IsWaiting()) {
                 if(currentRoom.HasGoblins()) {
+                    Debug.Log("Fighting goblin");
                     asc.FightGoblin();
                 }
             }

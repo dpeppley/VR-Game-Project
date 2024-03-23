@@ -35,6 +35,9 @@ public class DungeonRoom : MonoBehaviour {
     }
 
     public void RemoveGoblin() {
+        // Debug.Log(goblins[goblins.Count]);
+        //Debug.Log(goblins[goblins.Count-1]);
+        // Debug.Log(goblins.IndexOf(goblins.Last));
         GameObject goblinToRemove = goblins[goblins.Count-1];
         goblins.RemoveAt(goblins.Count-1);
         GameObject.Destroy(goblinToRemove);

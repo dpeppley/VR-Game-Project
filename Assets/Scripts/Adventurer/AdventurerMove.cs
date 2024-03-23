@@ -19,7 +19,7 @@ public class AdventurerMove : AdventurerState {
     public override void Act() {
         if(currentLocation.GetComponent<DungeonRoom>().HasPaths()) {
             if(Vector3.Distance(adventurer.transform.position, nextPoint.position) > 0.1f) {
-                adventurer.transform.position = Vector3.MoveTowards(adventurer.transform.position, nextPoint.position, 0.03f);
+                adventurer.transform.position = Vector3.MoveTowards(adventurer.transform.position, nextPoint.position, 0.04f);
             } else {
                 if(pointIndex == selectedPath.pathPoints.Count-1) {
                     asc.SetState(new AdventurerExplore(asc));
@@ -28,6 +28,8 @@ public class AdventurerMove : AdventurerState {
                     nextPoint = selectedPath.pathPoints[pointIndex];
                 }
             }
+        } else {
+            asc.DestroyAdventurer();
         }
     }
 

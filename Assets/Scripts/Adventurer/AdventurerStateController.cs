@@ -87,6 +87,10 @@ public class AdventurerStateController : MonoBehaviour {
         anim.avatar = idleAvatar;
     }
 
+    public void DestroyAdventurer() {
+        Destroy(this.gameObject);
+    }
+
     private IEnumerator ExploreRoom() {
         for(int i = 0; i < 10; i++) {
             yield return new WaitForSeconds(1.0f);
@@ -115,6 +119,7 @@ public class AdventurerStateController : MonoBehaviour {
         anim.SetBool("isAttacking", false);
         anim.avatar = idleAvatar;
         waiting = false;
+        SetState(new AdventurerMove(this));
     }
 
     public void StartIdling() {
