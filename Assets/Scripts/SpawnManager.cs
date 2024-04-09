@@ -45,13 +45,10 @@ public class SpawnManager : MonoBehaviour
 
 
 	public void ActivateCamera() {
-		Debug.Log("Camera activated");
 		if(!cooldown) {
-			Debug.Log("Off cooldown");
 			// Vector3 fwd = transform.TransformDirection(Vector3.forward);
 			// RaycastHit hit;
 			// if (Physics.Raycast(transform.position, fwd, out hit, Mathf.Infinity)) {
-			Debug.Log("Spawned!");
 			cooldown = true;
 
 			// Raycast from camera to plane

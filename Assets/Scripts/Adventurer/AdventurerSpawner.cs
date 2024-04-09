@@ -8,13 +8,25 @@ public class AdventurerSpawner : MonoBehaviour {
     [SerializeField]
     private Transform spawnPoint;
 
+    private bool spawnerRunning;
+
     void Start() {
-        StartCoroutine("SpawnAdventurer");
+        spawnerRunning = false;
+        StartSpawner();
     }
 
     private IEnumerator SpawnAdventurer() {
         Instantiate(adventurerPrefab, spawnPoint.position, Quaternion.identity);
         yield return new WaitForSeconds(10.0f);
-        //StartCoroutine("SpawnAdventurer");
+        StartCoroutine("SpawnAdventurer");
+    }
+
+    public void StartSpawner() {
+        Debug.Log("Spawner Started");
+        if(!spawnerRunning) {
+            gameObject.GetComponent<AudioSource>().Play();
+            StartCoroutine("SpawnAdventurer");
+            spawnerRunning = true;
+        }
     }
 }
