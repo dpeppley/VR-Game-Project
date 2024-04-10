@@ -12,7 +12,7 @@ public class AdventurerSpawner : MonoBehaviour {
 
     void Start() {
         spawnerRunning = false;
-        StartSpawner();
+        //StartSpawner();
     }
 
     private IEnumerator SpawnAdventurer() {
@@ -24,7 +24,7 @@ public class AdventurerSpawner : MonoBehaviour {
     public void StartSpawner() {
         Debug.Log("Spawner Started");
         if(!spawnerRunning) {
-            gameObject.GetComponent<AudioSource>().Play();
+            // gameObject.GetComponent<AudioSource>().Play();
             StartCoroutine("SpawnAdventurer");
             spawnerRunning = true;
         }
