@@ -15,15 +15,6 @@ public class GoblinExplore : GoblinState {
     public GoblinExplore(GoblinStateController gsc) : base(gsc) {}
 
     public override void Act() {
-        // if(gsc.exploring) {
-        //     if(!gsc.IsWaiting()) {
-        //         if(currentRoom.HasGoblins()) {
-        //             gsc.FightGoblin();
-        //         }
-        //     }
-        // } else {
-        //     gsc.SetState(new GoblinMove());
-        // }
         if(!gsc.IsWaiting()){
             if(!footstepAudio.isPlaying) {
                 footstepAudio.pitch = Random.Range(0.8f, 1.2f);
@@ -31,21 +22,30 @@ public class GoblinExplore : GoblinState {
             }
 
             if(Vector3.Distance(goblin.transform.position, destination) > 0.5f) {
-                goblin.transform.position = Vector3.MoveTowards(goblin.transform.position, destination, 0.05f);
+                // Debug.Log(gsc.GetCurrentRoom().gameObject.name + ", " + gsc.GetAnim().GetBool("isWalking"));
+                gsc.GetAnim().SetBool("isWalking", true);
+                Vector3 moveTo = new Vector3(destination.x, goblin.transform.position.y, destination.z);
+                goblin.transform.position = Vector3.MoveTowards(goblin.transform.position, moveTo, 0.05f);
+                // goblin.transform.rotation = Quaternion.LookRotation(goblin.transform.position, moveTo);
+                goblin.transform.LookAt(moveTo);
+                //goblin.GetComponent<Rigidbody>().MovePosition(moveTo * Time.deltaTime * 0.05f);
             } else {
+                gsc.GetAnim().SetBool("isWalking", false);
                 NewDestination();
             }
 
+        } else {
+            gsc.GetAnim().SetBool("isWalking", false);
+            // if(currentRoom.HasAdventurer()) {
+            //     gsc.FightAdventurer();
+            // }
         }
     }
 
-    public override void CheckTransitions() {
-        // if(!gsc.IsExploring()) {
-        //     gsc.SetState(new GoblinMove(gsc));
-        // }
-    }
+    public override void CheckTransitions() {}
 
     public override void OnStateEnter() {
+        // gsc.anim.SetBool("isWalking", true);
         footstepAudio = gsc.GetFootstepAudio();
         goblin = gsc.gameObject;
         currentRoom = gsc.GetCurrentRoom().GetComponent<DungeonRoom>();
@@ -56,6 +56,7 @@ public class GoblinExplore : GoblinState {
     public override void OnStateExit() {}
 
     private void NewDestination() {
+        gsc.StartExploring();
         Vector3 roomPos = currentRoom.GetRoomPosition();
         float randX = Random.Range(roomPos.x - 5.0f, roomPos.x + 5.0f);
         float randZ = Random.Range(roomPos.z - 5.0f, roomPos.z + 5.0f);

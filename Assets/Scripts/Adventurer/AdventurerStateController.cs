@@ -20,6 +20,8 @@ public class AdventurerStateController : MonoBehaviour {
     private bool waiting = false;
     private bool exploring = false;
 
+    private int hitPoints = 3;
+
     void Start() {
         anim = GetComponent<Animator>();
         currentRoom = GameObject.Find("Adventurer Spawner").GetComponent<DungeonRoom>();
@@ -27,15 +29,8 @@ public class AdventurerStateController : MonoBehaviour {
     }
 
     void Update() {
-        // Debug.Log("Walking: " + anim.GetBool("isWalking") + ", fighting: " + anim.GetBool("isFighting"));
-        // Debug.Log(anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         currentState.CheckTransitions();
         currentState.Act();
-        // if(!anim.GetBool("isAttacking")) {
-        //     anim.avatar = anim.GetBool("isWalking") ? walkingAvatar : idleAvatar;
-        // }
-
-        // Debug.Log("Avatar: " + anim.avatar.name + ", anim clip: " + anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
     }
 
     public void SetState(AdventurerState state) {
@@ -115,6 +110,11 @@ public class AdventurerStateController : MonoBehaviour {
         yield return new WaitForSeconds(2.0f);
 
         currentRoom.GetComponent<DungeonRoom>().RemoveGoblin();
+        
+        hitPoints--;
+        if(hitPoints == 0) {
+            GameObject.Destroy(this.gameObject);
+        }
 
         anim.SetBool("isAttacking", false);
         anim.avatar = idleAvatar;

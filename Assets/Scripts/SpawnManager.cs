@@ -22,7 +22,10 @@ public class SpawnManager : MonoBehaviour
 	private bool cooldown = false;
 	private bool isActive;
 
+	private GameController gc;
+
 	private void Start() {
+		gc = GameObject.Find("GameController").GetComponent<GameController>();
 		ActivateCamera();
 	}
 
@@ -41,18 +44,28 @@ public class SpawnManager : MonoBehaviour
 				
 			// }
 		}
+
+		if(gc.IsGameRunning()) {
+			crystalBall.GetComponent<Renderer>().material = mat;
+			isActive = true;
+		} else {
+			crystalBall.GetComponent<Renderer>().material = cooldownMat;
+			isActive = false;
+		}
     }
 
 
 	public void ActivateCamera() {
-		if(!cooldown) {
+		if(isActive && !cooldown) {
 			// Vector3 fwd = transform.TransformDirection(Vector3.forward);
 			// RaycastHit hit;
 			// if (Physics.Raycast(transform.position, fwd, out hit, Mathf.Infinity)) {
 			cooldown = true;
 
 			// Raycast from camera to plane
-			GameObject goblin = Instantiate(prefabToSpawn, VariedPosition(room.GetRoomPosition()) , transform.rotation);
+			Quaternion spawnRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+			GameObject goblin = Instantiate(prefabToSpawn, VariedPosition(room.GetRoomPosition()) , spawnRotation);
+			goblin.GetComponent<GoblinStateController>().SetCurrentRoom(gameObject.transform.parent.GetComponent<DungeonRoom>());
 			room.AddGoblin(goblin);
 
 			crystalBall.GetComponent<Renderer>().material = cooldownMat;
@@ -61,13 +74,20 @@ public class SpawnManager : MonoBehaviour
 		}
 	}
 
-	public void DeactivateCamera() {
-		isActive = false;
-	}
+	// private void EnableCamera() {
+	// 	crystalBall.GetComponent<Renderer>().material = mat;
+	// 	isActive = true;
+	// }
+
+	// public void DisableCamera() {
+	// 	crystalBall.GetComponent<Renderer>().material = cooldownMat;
+	// 	isActive = false;
+	// }
+
 
 	private Vector3 VariedPosition(Vector3 pos) {
 		float newX = pos.x + Random.Range(-5f, 5f);
-		float newY = pos.y + 5f;
+		float newY = pos.y;
 		float newZ = pos.z + Random.Range(-5f, 5f);
 		Vector3 newPos = new Vector3(newX, newY, newZ);
 		return newPos;

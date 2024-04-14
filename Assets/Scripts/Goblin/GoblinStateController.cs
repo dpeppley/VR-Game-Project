@@ -6,16 +6,20 @@ public class GoblinStateController : MonoBehaviour {
     [SerializeField]
     private GoblinState currentState;
     [SerializeField]
-    private GameObject currentRoom;
+    private DungeonRoom currentRoom;
     [SerializeField]
     private AudioSource footstep;
+
+    private Animator anim;
 
     private bool waiting = false;
     private bool exploring = false;
 
     void Start() {
+        anim = GetComponent<Animator>();
         // currentRoom = GameObject.Find("Room 1");
         SetState(new GoblinExplore(this));
+        Debug.Log(currentRoom);
     }
 
     void Update() {
@@ -35,11 +39,11 @@ public class GoblinStateController : MonoBehaviour {
         }
     }
 
-    public GameObject GetCurrentRoom() {
+    public DungeonRoom GetCurrentRoom() {
         return currentRoom;
     }
 
-    public void SetCurrentRoom(GameObject room) {
+    public void SetCurrentRoom(DungeonRoom room) {
         currentRoom = room;
     }
 
@@ -60,13 +64,14 @@ public class GoblinStateController : MonoBehaviour {
         return footstep;
     }
 
+    public Animator GetAnim() {
+        return anim;
+    }
+
     private IEnumerator ExploreRoom() {
         yield return new WaitForSeconds(1.0f);
-        if(currentRoom.GetComponent<DungeonRoom>().HasGoblins()) {
-            waiting = true;
-            yield return new WaitForSeconds(3.0f);
-            currentRoom.GetComponent<DungeonRoom>().RemoveGoblin();
-            waiting = false;
-        }
+        waiting = true;
+        yield return new WaitForSeconds(3.0f);
+        waiting = false;
     }
 }

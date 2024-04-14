@@ -10,14 +10,20 @@ public class AdventurerSpawner : MonoBehaviour {
 
     private bool spawnerRunning;
 
+    private float spawnDelay;
+
     void Start() {
+        spawnDelay = 10.0f;
         spawnerRunning = false;
         //StartSpawner();
     }
 
     private IEnumerator SpawnAdventurer() {
-        Instantiate(adventurerPrefab, spawnPoint.position, Quaternion.identity);
-        yield return new WaitForSeconds(10.0f);
+        Instantiate(adventurerPrefab, new Vector3(spawnPoint.position.x, 0, spawnPoint.position.z), Quaternion.identity);
+        yield return new WaitForSeconds(spawnDelay);
+        if(spawnDelay > 5) {
+            spawnDelay -= .01f;
+        }
         StartCoroutine("SpawnAdventurer");
     }
 
@@ -28,5 +34,10 @@ public class AdventurerSpawner : MonoBehaviour {
             StartCoroutine("SpawnAdventurer");
             spawnerRunning = true;
         }
+    }
+
+    public void StopSpawner() {
+        StopCoroutine("SpawnAdventurer");
+        spawnerRunning = false;
     }
 }
