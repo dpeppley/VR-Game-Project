@@ -12,7 +12,10 @@ public class AdventurerSpawner : MonoBehaviour {
 
     private float spawnDelay;
 
+    private GameController gc;
+
     void Start() {
+        gc = GameObject.Find("GameController").GetComponent<GameController>();
         spawnDelay = 10.0f;
         spawnerRunning = false;
         //StartSpawner();
@@ -24,7 +27,9 @@ public class AdventurerSpawner : MonoBehaviour {
         if(spawnDelay > 5) {
             spawnDelay -= .01f;
         }
-        StartCoroutine("SpawnAdventurer");
+        if(gc.IsGameRunning()) {
+            StartCoroutine("SpawnAdventurer");
+        }
     }
 
     public void StartSpawner() {
@@ -34,10 +39,5 @@ public class AdventurerSpawner : MonoBehaviour {
             StartCoroutine("SpawnAdventurer");
             spawnerRunning = true;
         }
-    }
-
-    public void StopSpawner() {
-        StopCoroutine("SpawnAdventurer");
-        spawnerRunning = false;
     }
 }

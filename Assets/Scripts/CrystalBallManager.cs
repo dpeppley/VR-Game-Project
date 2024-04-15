@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class CrystalBallManager : MonoBehaviour
 {
@@ -11,11 +12,17 @@ public class CrystalBallManager : MonoBehaviour
     private GameObject xrOrigin;
     private Vector3 startPos;
 
+
     private bool cameraInDungeon;
 
     private AudioSource teleportAudio;
+    private SpeakerController speaker;
+
+    private GameController gc;
 
     void Start() {
+        gc = GameObject.Find("GameController").GetComponent<GameController>();
+        speaker = GameObject.Find("Speaker").GetComponent<SpeakerController>();
         cameraInDungeon = false;
         startPos = xrOrigin.transform.position;
         teleportAudio = GetComponent<AudioSource>();
@@ -27,13 +34,19 @@ public class CrystalBallManager : MonoBehaviour
 
     public void MoveToCamera() {
         teleportAudio.Play();
+        gc.DungeonShiftAudio();
+        speaker.Spatialize2D();
         Vector3 cameraTransform = spawnPoint.transform.position;
         xrOrigin.transform.position = new Vector3(cameraTransform.x, cameraTransform.y - 8.0f, cameraTransform.z);
         cameraInDungeon = true;
     }
 
     public void MoveToOffice() {
-        teleportAudio.Play();
+        if(cameraInDungeon) {
+            speaker.Spatialize3D();
+            teleportAudio.Play();
+        }
+        gc.OfficeShiftAudio();
         xrOrigin.transform.position = startPos;
         cameraInDungeon = false;
     }
@@ -43,7 +56,6 @@ public class CrystalBallManager : MonoBehaviour
     }
 
     public void AlertFlash() {
-        // Debug.Log(spawnPoint);
         spawnPoint.GetComponent<SpawnManager>().StartCoroutine("AlertFlash");
     }
 }

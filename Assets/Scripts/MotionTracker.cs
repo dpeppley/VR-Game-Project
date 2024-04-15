@@ -32,11 +32,6 @@ public class MotionTracker : MonoBehaviour {
         vfx.SetActive(false);
         Debug.Log(Resources.Load<TextAsset>("Circle"));
         string textFile = Resources.Load<TextAsset>("Circle").ToString();
-        // string[] gestureFiles = Directory.GetFiles(Application.persistentDataPath, "*.xml");
-
-        // foreach(var item in gestureFiles) {
-        //     trainingSet.Add(GestureIO.ReadGestureFromFile(item));
-        // }
         trainingSet.Add(GestureIO.ReadGestureFromXML(textFile));
 
         audio = wand.GetDrawAudio();
@@ -57,13 +52,9 @@ public class MotionTracker : MonoBehaviour {
     void StartMovement() {
         audio.Play();
         vfx.SetActive(true);
-        // Debug.Log("Start movement");
         isMoving = true;
         positionsList.Clear();
         positionsList.Add(movementSource.position);
-        /*if(debugCubePrefab) {
-            Destroy(Instantiate(debugCubePrefab, movementSource.position, Quaternion.identity), 3);
-        }*/
     }
 
     void EndMovement() {
@@ -92,7 +83,7 @@ public class MotionTracker : MonoBehaviour {
         } else {
             Result result = PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
             Debug.Log(result.GestureClass + result.Score);
-            if (result.Score > 0.9f) {
+            if (result.Score > 0.8f) {
                 Debug.Log("Wand activated");
                 wand.ActivateWand();
             }
@@ -100,13 +91,9 @@ public class MotionTracker : MonoBehaviour {
     }
 
     void UpdateMovement() {
-        // Debug.Log("Update movement");
         Vector3 lastPosition = positionsList[positionsList.Count - 1];
         if(Vector3.Distance(movementSource.position, lastPosition) > newPositionThresholdDistance) {
             positionsList.Add(movementSource.position);
-            /*if(debugCubePrefab) {
-                Destroy(Instantiate(debugCubePrefab, movementSource.position, Quaternion.identity), 3);
-            }*/
         }
     }
 }

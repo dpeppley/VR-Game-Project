@@ -31,8 +31,6 @@ public class SpawnManager : MonoBehaviour
 
 	private void Update()
     {
-		// Debug.Log(Time.time +", " + nextSpawnTime);
-		// crystalBall.GetComponent<Renderer>().material = cooldownMat;
 		if (Time.time > nextSpawnTime)
 		{
 			if (cooldown)
@@ -40,9 +38,6 @@ public class SpawnManager : MonoBehaviour
 				cooldown = false;
 				crystalBall.GetComponent<Renderer>().material = mat;
 			} 
-			// else {
-				
-			// }
 		}
 
 		if(gc.IsGameRunning()) {
@@ -57,9 +52,6 @@ public class SpawnManager : MonoBehaviour
 
 	public void ActivateCamera() {
 		if(isActive && !cooldown) {
-			// Vector3 fwd = transform.TransformDirection(Vector3.forward);
-			// RaycastHit hit;
-			// if (Physics.Raycast(transform.position, fwd, out hit, Mathf.Infinity)) {
 			cooldown = true;
 
 			// Raycast from camera to plane
@@ -70,19 +62,8 @@ public class SpawnManager : MonoBehaviour
 
 			crystalBall.GetComponent<Renderer>().material = cooldownMat;
 			nextSpawnTime = Time.time + cooldownTime;
-			// }
 		}
 	}
-
-	// private void EnableCamera() {
-	// 	crystalBall.GetComponent<Renderer>().material = mat;
-	// 	isActive = true;
-	// }
-
-	// public void DisableCamera() {
-	// 	crystalBall.GetComponent<Renderer>().material = cooldownMat;
-	// 	isActive = false;
-	// }
 
 
 	private Vector3 VariedPosition(Vector3 pos) {

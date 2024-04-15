@@ -17,7 +17,6 @@ public class GoblinStateController : MonoBehaviour {
 
     void Start() {
         anim = GetComponent<Animator>();
-        // currentRoom = GameObject.Find("Room 1");
         SetState(new GoblinExplore(this));
         Debug.Log(currentRoom);
     }

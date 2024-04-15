@@ -49,7 +49,6 @@ public class AdventurerExplore : AdventurerState {
         currentRoom.AlertCamera();
         NewDestination();
         asc.StartExploring();
-        // asc.StartCoroutine("ExploreRoom");
     }
 
     public override void OnStateExit() {}

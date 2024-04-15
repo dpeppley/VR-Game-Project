@@ -22,7 +22,6 @@ public class WandManager : MonoBehaviour {
 
     void OnCollisionEnter(Collision col) {
         if(col.gameObject.tag == "Crystal Ball") {
-            // Debug.Log("Collided with crystal ball");
             tapAudio.Play();
             if(isActivated) {
                 Debug.Log("Collided and activated");

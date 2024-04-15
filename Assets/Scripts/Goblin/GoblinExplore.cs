@@ -22,13 +22,10 @@ public class GoblinExplore : GoblinState {
             }
 
             if(Vector3.Distance(goblin.transform.position, destination) > 0.5f) {
-                // Debug.Log(gsc.GetCurrentRoom().gameObject.name + ", " + gsc.GetAnim().GetBool("isWalking"));
                 gsc.GetAnim().SetBool("isWalking", true);
                 Vector3 moveTo = new Vector3(destination.x, goblin.transform.position.y, destination.z);
                 goblin.transform.position = Vector3.MoveTowards(goblin.transform.position, moveTo, 0.05f);
-                // goblin.transform.rotation = Quaternion.LookRotation(goblin.transform.position, moveTo);
                 goblin.transform.LookAt(moveTo);
-                //goblin.GetComponent<Rigidbody>().MovePosition(moveTo * Time.deltaTime * 0.05f);
             } else {
                 gsc.GetAnim().SetBool("isWalking", false);
                 NewDestination();
@@ -36,16 +33,12 @@ public class GoblinExplore : GoblinState {
 
         } else {
             gsc.GetAnim().SetBool("isWalking", false);
-            // if(currentRoom.HasAdventurer()) {
-            //     gsc.FightAdventurer();
-            // }
         }
     }
 
     public override void CheckTransitions() {}
 
     public override void OnStateEnter() {
-        // gsc.anim.SetBool("isWalking", true);
         footstepAudio = gsc.GetFootstepAudio();
         goblin = gsc.gameObject;
         currentRoom = gsc.GetCurrentRoom().GetComponent<DungeonRoom>();
